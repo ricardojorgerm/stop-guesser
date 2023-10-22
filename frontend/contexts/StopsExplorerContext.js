@@ -141,7 +141,7 @@ export function StopsExplorerContextProvider({ children }) {
           score = 10000;
         }
         else if (distance >= 1 && distance < 100){
-          score = 10000-(150*(distance/8));
+          score = 9500-(150*(distance/8));
         }
         else if (distance => 100 && distance <= 500){
           score = 8500-(10*(distance));
