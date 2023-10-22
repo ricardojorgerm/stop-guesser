@@ -50,7 +50,7 @@ export default async function Image({ params }) {
   //
   // E. Render dynamic component
 
-  return new ImageResponse(<OpenGraphStopsDynamic stopData={stopData} allLinesData={allLinesData} />, { ...size, fonts: customFonts });
-
+  // return new ImageResponse(<OpenGraphStopsDynamic stopData={stopData} allLinesData={allLinesData} />, { ...size, fonts: customFonts });
+  return new ImageResponse(<OpenGraphDefault />, { ...size, fonts: customFonts });
   //
 }
