@@ -94,7 +94,7 @@ export default function StopsExplorerTimetableRow({ rowType, tripData }) {
 
       if (rowType === 'current' || rowType === 'future') {
         //
-        if (tripData.estimated_arrival) {
+/*         if (tripData.estimated_arrival) {
           // Format the arrival estimate string
           const parsedArrivalEstimate = convertOperationTimeStringTo24HourTimeString(tripData.estimated_arrival);
           const formattedArrivalEstimate = parsedArrivalEstimate.substring(0, 5);
@@ -108,7 +108,7 @@ export default function StopsExplorerTimetableRow({ rowType, tripData }) {
           //
           return;
         }
-
+ */
         // Set the trip status
         setTripRealtimeStatus('scheduled');
         // Format the arrival estimate string

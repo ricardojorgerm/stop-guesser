@@ -19,7 +19,7 @@ export default function DebugToggle() {
   // B. Render Components
 
   return (
-    <div className={styles.toggle} onClick={debugContext.toggleIsDebug}>
+    <div className={styles.toggle}>
       {debugContext.isDebug ? t('enabled') : t('disabled')}
     </div>
   );

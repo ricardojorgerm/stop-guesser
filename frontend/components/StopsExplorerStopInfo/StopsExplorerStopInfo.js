@@ -25,19 +25,21 @@ export default function StopsExplorerStopInfo() {
   return (
     stopsExplorerContext.entities.stop && (
       <div className={styles.container}>
-        <div className={styles.badges}>
-          <CopyBadge label={`#${stopsExplorerContext.entities.stop.id}`} value={stopsExplorerContext.entities.stop.id} />
-          <CopyBadge label={`${stopsExplorerContext.entities.stop.lat}, ${stopsExplorerContext.entities.stop.lon}`} value={`${stopsExplorerContext.entities.stop.lat}	${stopsExplorerContext.entities.stop.lon}`} />
-        </div>
-
-        <div className={styles.nameAndLocation} aria-label={stopsExplorerContext.entities.stop.tts_name || stopsExplorerContext.entities.stop.name}>
-          <h3 className={styles.stopName} aria-label={stopsExplorerContext.entities.stop.tts_name || stopsExplorerContext.entities.stop.name}>
-            <AudioBadge type="stops" id={stopsExplorerContext.entities.stop.id} />
-            {stopsExplorerContext.entities.stop.name}
-          </h3>
-          {stopLocation && <h5 className={styles.stopLocation}>{stopLocation}</h5>}
-        </div>
-
+        {stopsExplorerContext.entities.showSolution == true && (
+          <div className={styles.badges}>
+            <CopyBadge label={`#${stopsExplorerContext.entities.stop.id}`} value={stopsExplorerContext.entities.stop.id} />
+            <CopyBadge label={`${stopsExplorerContext.entities.stop.lat}, ${stopsExplorerContext.entities.stop.lon}`} value={`${stopsExplorerContext.entities.stop.lat}	${stopsExplorerContext.entities.stop.lon}`} />
+          </div>
+        )}
+        {stopsExplorerContext.entities.showSolution == true && (
+          <div className={styles.nameAndLocation} aria-label={stopsExplorerContext.entities.stop.tts_name || stopsExplorerContext.entities.stop.name}>
+            <h3 className={styles.stopName} aria-label={stopsExplorerContext.entities.stop.tts_name || stopsExplorerContext.entities.stop.name}>
+              <AudioBadge type="stops" id={stopsExplorerContext.entities.stop.id} />
+              {stopsExplorerContext.entities.stop.name}
+            </h3>
+            {stopLocation && <h5 className={styles.stopLocation}>{stopLocation}</h5>}
+          </div>
+        )}
         {stopsExplorerContext.entities.stop.facilities.length > 0 && (
           <div className={styles.facilities}>
             {stopsExplorerContext.entities.stop.facilities.map((e, index) => (

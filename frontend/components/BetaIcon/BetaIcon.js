@@ -25,7 +25,7 @@ export default function BetaIcon() {
   // C. Render Components
 
   return (
-    <div className={styles.beta} onClick={handleClick}>
+    <div className={styles.beta}>
       {debugContext.isDebug ? 'DEBUG' : 'BETA'}
     </div>
   );

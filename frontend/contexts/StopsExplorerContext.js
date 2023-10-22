@@ -1,6 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
+import * as turf from '@turf/turf';
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 // A.
@@ -24,6 +25,7 @@ const initialEntitiesState = {
   pattern: null,
   shape: null,
   vehicle: null,
+  showSolution: false,
 };
 
 // B.
@@ -59,9 +61,9 @@ export function StopsExplorerContextProvider({ children }) {
   // C. Supporting functions
 
   const updateWindowUrl = (stopId = 'all', stopName = 'Carris Metropolitana') => {
-    const newUrl = `/stops/${stopId}`;
-    window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
-    document.title = stopName;
+    //const newUrl = `/stops/${stopId}`;
+    //window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+    //document.title = stopName;
   };
 
   //
@@ -100,13 +102,39 @@ export function StopsExplorerContextProvider({ children }) {
 
   // --------
 
+  const selectInitialStop = useCallback(
+    (stopId = false) => {
+      if (stopId) {
+        const foundStop = allStopsData.find((item) => item.id === stopId);
+      }
+      else {
+        const foundStop = allStopsData[Math.floor(Math.random()*allStopsData.length)];
+      }
+      if (foundStop) {
+        setEntitiesState({ ...initialEntitiesState, stop: foundStop });
+      }
+    },
+    [allStopsData]
+  );
+
   const selectStop = useCallback(
     (stopId) => {
       const foundStop = allStopsData.find((item) => item.id === stopId);
       if (foundStop) {
+        correct_coordinates = turf.Point([mapState.stop.lon, mapState.stop.lat]);
+        user_coordinates = turf.Point([foundStop.lon, foundStop.lat]);
+        var distance = turf.distance(correct_coordinates, user_coordinates, {}) * 1000;
+        var score = 0;
+        if (distance < 10){
+          score = 10000
+        }
+        else{
+          score = Math.round((1/distance)*100000);
+        }
+        window.alert("Your score is " + score + "out of 10 000 points.");
         setMapState((prev) => ({ ...prev, auto_zoom: true, selected_feature: null, selected_coordinates: null }));
-        setEntitiesState({ ...initialEntitiesState, stop: foundStop });
-        updateWindowUrl(stopId, foundStop.name);
+        setEntitiesState({ ...initialEntitiesState, showSolution: true });
+        //updateWindowUrl(stopId, foundStop.name);
       }
     },
     [allStopsData]
@@ -114,13 +142,13 @@ export function StopsExplorerContextProvider({ children }) {
 
   const clearSelectedStop = useCallback(() => {
     setEntitiesState(initialEntitiesState);
-    updateWindowUrl();
+    //updateWindowUrl();
   }, []);
 
   // --------
 
   const selectTrip = useCallback((tripData) => {
-    setEntitiesState((prev) => ({ ...prev, trip: tripData }));
+    // setEntitiesState((prev) => ({ ...prev, trip: tripData }));
   }, []);
 
   const clearSelectedTrip = useCallback(() => {

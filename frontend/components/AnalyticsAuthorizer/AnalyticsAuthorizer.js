@@ -28,7 +28,7 @@ export default function AnalyticsAuthorizer() {
   useEffect(() => {
     const regexPatternToMatchCookiesPolicy = /^(\/[a-z]{2})?\/legal\/cookies\/?$/;
     const isPrivacyPage = regexPatternToMatchCookiesPolicy.test(pathname);
-    setIsOpen(!analyticsContext.enabled && !isPrivacyPage);
+    setIsOpen(false);
   }, [analyticsContext.enabled, pathname]);
 
   //

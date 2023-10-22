@@ -66,7 +66,7 @@ export default function StopsExplorerMap() {
   }, [allStopsData]);
 
   const selectedStopMapData = useMemo(() => {
-    if (stopsExplorerContext.entities.stop) {
+     if (stopsExplorerContext.entities.showSolution) {
       return {
         type: 'Feature',
         geometry: {
@@ -81,21 +81,21 @@ export default function StopsExplorerMap() {
   }, [stopsExplorerContext.entities.stop]);
 
   const selectedShapeMapData = useMemo(() => {
-    if (selectedPatternData && selectedShapeData) {
+/*     if (selectedPatternData && selectedShapeData) {
       return {
         ...selectedShapeData.geojson,
         properties: {
           color: selectedPatternData.color,
         },
       };
-    }
+    } */
     return null;
   }, [selectedPatternData, selectedShapeData]);
 
   const selectedVehicleMapData = useMemo(() => {
-    if (allVehiclesData && stopsExplorerContext.entities.trip_id) {
-      const selectedVehicleData = allVehiclesData.find((item) => item.trip_id && item.trip_id === stopsExplorerContext.entities.trip_id);
-      if (selectedVehicleData) {
+     if (allVehiclesData && stopsExplorerContext.entities.trip_id) {
+      /* const selectedVehicleData = allVehiclesData.find((item) => item.trip_id && item.trip_id === stopsExplorerContext.entities.trip_id);
+       if (selectedVehicleData) {
         return {
           type: 'Feature',
           geometry: {
@@ -114,13 +114,13 @@ export default function StopsExplorerMap() {
             status: selectedVehicleData.status,
           },
         };
-      }
+      } */
       return null;
     }
   }, [allVehiclesData, stopsExplorerContext.entities.trip_id]);
 
   const selectedCoordinatesMapData = useMemo(() => {
-    if (stopsExplorerContext.map.selected_coordinates) {
+     if (stopsExplorerContext.map.selected_coordinates) {
       return {
         type: 'Feature',
         geometry: {
@@ -128,7 +128,7 @@ export default function StopsExplorerMap() {
           coordinates: stopsExplorerContext.map.selected_coordinates,
         },
       };
-    }
+    } 
     return null;
   }, [stopsExplorerContext.map.selected_coordinates]);
 
@@ -164,7 +164,7 @@ export default function StopsExplorerMap() {
     });
   }, [stopsExplorerMap]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (selectedStopMapData && selectedVehicleMapData) {
       // Get window width and height
       let fitBoundsPadding = 100;
@@ -175,7 +175,7 @@ export default function StopsExplorerMap() {
       stopsExplorerMap.fitBounds(boundingBox, { duration: 2000, padding: fitBoundsPadding, bearing: stopsExplorerMap.getBearing(), maxZoom: 16 });
     }
   }, [selectedStopMapData, selectedVehicleMapData, stopsExplorerMap]);
-
+ */
   //
   // C. Helper functions
 
@@ -215,7 +215,7 @@ export default function StopsExplorerMap() {
     const stopMapFeature = allStopsMapData?.features.find((f) => f.properties?.id === stopsExplorerContext.entities.stop?.id);
     if (!stopMapFeature) return;
     // Center the map and save the feature to state
-    moveMap(stopMapFeature.geometry?.coordinates);
+    // moveMap(stopMapFeature.geometry?.coordinates);
     stopsExplorerContext.setSelectedFeature(stopMapFeature);
     //
   });
@@ -230,7 +230,7 @@ export default function StopsExplorerMap() {
     if (event?.features[0]?.properties?.id) {
       stopsExplorerContext.selectStop(event.features[0].properties.id);
       stopsExplorerContext.setSelectedFeature(event.features[0]);
-      moveMap(event.features[0].geometry?.coordinates);
+      //moveMap(event.features[0].geometry?.coordinates);
     }
   };
 
@@ -253,9 +253,9 @@ export default function StopsExplorerMap() {
       stopsExplorerMap.setFeatureState({ source: 'all-stops', id: f.id }, { selected: false });
     });
     // Then mark the selected one as selected
-    if (stopsExplorerContext.map.selected_feature) {
+/*     if (stopsExplorerContext.map.selected_feature) {
       stopsExplorerMap.setFeatureState({ source: 'all-stops', id: stopsExplorerContext.map.selected_feature.properties.mapid }, { selected: true });
-    }
+    } */
   };
 
   //

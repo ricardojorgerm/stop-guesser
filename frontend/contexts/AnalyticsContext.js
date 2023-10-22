@@ -61,8 +61,8 @@ export function AnalyticsContextProvider({ children }) {
 
   const enableCapture = useCallback(() => {
     // Set local state and save decision to local storage
-    setIsCaptureEnabled(true);
-    localStorage.setItem(LOCAL_STORAGE_ENABLED_KEY, parseDateToString(new Date()));
+    setIsCaptureEnabled(false);
+    localStorage.clear();
   }, []);
 
   const disableCapture = useCallback(() => {

@@ -47,7 +47,10 @@ export default function StopsExplorer() {
   useEffect(() => {
     const matchedStopIdFromUrl = window.location.pathname.match(/\/stops\/(.+)/);
     if (matchedStopIdFromUrl && matchedStopIdFromUrl[1] !== 'all' && allStopsData && !stopsExplorerContext.entities.stop?.id) {
-      stopsExplorerContext.selectStop(matchedStopIdFromUrl[1]);
+      stopsExplorerContext.selectInitialStop(matchedStopIdFromUrl[1]);
+    }
+    else{
+      stopsExplorerContext.selectInitialStop(false);
     }
   });
 
