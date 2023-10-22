@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { ImageResponse } from 'next/server';
 import OpenGraphStopsDefault from 'opengraph/OpenGraphStopsDefault';
-import OpenGraphStopsDynamic from 'opengraph/OpenGraphStopsDynamic';
+// import OpenGraphStopsDynamic from 'opengraph/OpenGraphStopsDynamic';
 
 /* * */
 
@@ -42,15 +42,15 @@ export default async function Image({ params }) {
 
   const allLinesData = [];
 
-  for (const lineId of stopData.lines) {
+/*   for (const lineId of stopData.lines) {
     const lineData = await fetch(`https://api.carrismetropolitana.pt/lines/${lineId}`).then((res) => res.json());
     allLinesData.push(lineData);
-  }
+  } */
 
   //
   // E. Render dynamic component
 
   // return new ImageResponse(<OpenGraphStopsDynamic stopData={stopData} allLinesData={allLinesData} />, { ...size, fonts: customFonts });
-  return new ImageResponse(<OpenGraphDefault />, { ...size, fonts: customFonts });
+  return new ImageResponse(<OpenGraphStopsDefault />, { ...size, fonts: customFonts });
   //
 }
