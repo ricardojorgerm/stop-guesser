@@ -140,19 +140,19 @@ export function StopsExplorerContextProvider({ children }) {
         if (distance < 1){
           score = 10000;
         }
-        if (distance >= 1 && distance <= 100){
-          score = 10000-(100*(distance/2));
+        if (distance >= 1 && distance < 200){
+          score = 10000-(100*(distance/8));
         }
-        else if (distance > 100 && distance <= 500){
-          score = 5000-(10*(distance/2));
+        else if (distance => 200 && distance <= 500){
+          score = 8500-(10*(distance/2));
         }
         else if (distance > 500 && distance <= 1000){
-          score = 2500-(10*(distance/8));
+          score = 6625-(10*(distance/8));
         }
-        else if (distance > 1000 && distance <= 10000){
-          score = 1250-(distance/8);
+        else if (distance > 1000 && distance <= 6375){
+          score = 6375-(distance);
         }
-        else if (distance > 10000){
+        else if (distance > 6375){
           score = 0;
         }
         window.alert("Your score is " + Math.round(score) + " out of 10 000 points.");
