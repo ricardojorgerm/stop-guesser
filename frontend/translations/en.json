@@ -445,12 +445,12 @@
         "label": "Real-time data"
     },
     "StopsExplorer": {
-        "title": "Paragens e Horários",
+        "title": "Jogo das Paragens",
         "no_selection": "Selecione uma Paragem"
     },
     "StopsExplorerToolbar": {
         "map_style": {
-            "label": "Paragens e Horários",
+            "label": "Jogo das Paragens",
             "options": {
                 "map": "Mapa",
                 "satellite": "Satélite"

@@ -25,10 +25,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/Lisbon" now={Date.now()}>
       <AnalyticsAuthorizer />
       <AppWrapper>
-        <AppTopBar />
-        <AppHeader />
         {children}
-        <AppFooter />
       </AppWrapper>
     </NextIntlClientProvider>
   );

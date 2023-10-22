@@ -14,18 +14,18 @@ export async function generateMetadata({ params }) {
   if (params.stop_id === 'all' || !stopData.name) {
     switch (params.locale) {
       case 'pt':
-        return { title: 'Todas as Paragens', description: 'Conheça as paragens e horários da Carris Metropolitana' };
+        return { title: 'Jogo das Paragens', description: 'Conheça as paragens e horários da Carris Metropolitana' };
       default:
       case 'en':
-        return { title: 'Todas as Paragens', description: 'Conheça as paragens e horários da Carris Metropolitana' };
+        return { title: 'Jogo das Paragens', description: 'Conheça as paragens e horários da Carris Metropolitana' };
     }
   } else {
     switch (params.locale) {
       case 'pt':
-        return { title: `Horários na paragem ${stopData.name}`, description: 'Estimativas de chegada em tempo real para os autocarros da Carris Metropolitana nesta paragem.' };
+        return { title: `Jogo das Paragens`, description: 'Conheça as paragens e horários da Carris Metropolitana.' };
       default:
       case 'en':
-        return { title: `Horários na paragem ${stopData.name}`, description: 'Estimativas de chegada em tempo real para os autocarros da Carris Metropolitana nesta paragem.' };
+        return { title: `Jogo das Paragens`, description: 'Conheça as paragens e horários da Carris Metropolitana.' };
     }
   }
 
