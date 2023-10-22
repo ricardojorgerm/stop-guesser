@@ -74,7 +74,6 @@ export default function StopsExplorer() {
     >
       <div className={styles.container}>
         <div className={styles.toolbar}>
-          <StopsExplorerToolbar />
         </div>
         <div className={styles.map}>
           <StopsExplorerMap />
