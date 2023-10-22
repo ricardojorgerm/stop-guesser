@@ -228,7 +228,7 @@ export default function StopsExplorerMap() {
 
   const handleMapClick = (event) => {
     if (event?.features[0]?.properties?.id) {
-      stopsExplorerContext.selectStop(event.features[0].properties.id);
+      stopsExplorerContext.selectStop(event.features[0].properties.id, stopsExplorerContext.entities.stop);
       stopsExplorerContext.setSelectedFeature(event.features[0]);
       //moveMap(event.features[0].geometry?.coordinates);
     }

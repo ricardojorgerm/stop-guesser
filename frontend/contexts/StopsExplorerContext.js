@@ -3,6 +3,7 @@
 import useSWR from 'swr';
 import * as turf from '@turf/turf';
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { StyleExpression } from 'maplibre-gl';
 
 // A.
 // SETUP INITIAL STATE
@@ -104,36 +105,59 @@ export function StopsExplorerContextProvider({ children }) {
 
   const selectInitialStop = useCallback(
     (stopId = false) => {
+      var foundStop = null;
+      console.log(allStopsData);
       if (stopId) {
-        const foundStop = allStopsData.find((item) => item.id === stopId);
+        foundStop = allStopsData.find((item) => item.id === stopId);
       }
       else {
-        const foundStop = allStopsData[Math.floor(Math.random()*allStopsData.length)];
+/*         if (allStopsData){
+          foundStop=allStopsData[Math.floor(Math.random()*allStopsData.length)];
+        } */
       }
+      console.log(foundStop);
       if (foundStop) {
         setEntitiesState({ ...initialEntitiesState, stop: foundStop });
+        console.log(entitiesState);
+        console.log(entitiesState.stop);
       }
     },
     [allStopsData]
   );
 
   const selectStop = useCallback(
-    (stopId) => {
+    (stopId, existingStop) => {
       const foundStop = allStopsData.find((item) => item.id === stopId);
       if (foundStop) {
-        correct_coordinates = turf.Point([mapState.stop.lon, mapState.stop.lat]);
-        user_coordinates = turf.Point([foundStop.lon, foundStop.lat]);
+        console.log(entitiesState);
+        console.log(entitiesState.stop);
+        console.log(mapState);
+        var correct_coordinates = turf.point([existingStop.lon, existingStop.lat]);
+        var user_coordinates = turf.point([foundStop.lon, foundStop.lat]);
         var distance = turf.distance(correct_coordinates, user_coordinates, {}) * 1000;
-        var score = 0;
-        if (distance < 10){
-          score = 10000
+        console.log(distance);
+        var score = 10000;
+        if (distance < 1){
+          score = 10000;
         }
-        else{
-          score = Math.round((1/distance)*100000);
+        if (distance >= 1 && distance <= 100){
+          score = 10000-(100*(distance/2));
         }
-        window.alert("Your score is " + score + "out of 10 000 points.");
+        else if (distance > 100 && distance <= 500){
+          score = 5000-(10*(distance/2));
+        }
+        else if (distance > 500 && distance <= 1000){
+          score = 2500-(10*(distance/8));
+        }
+        else if (distance > 1000 && distance <= 10000){
+          score = 1250-(distance/8);
+        }
+        else if (distance > 10000){
+          score = 0;
+        }
+        window.alert("Your score is " + Math.round(score) + " out of 10 000 points.");
         setMapState((prev) => ({ ...prev, auto_zoom: true, selected_feature: null, selected_coordinates: null }));
-        setEntitiesState({ ...initialEntitiesState, showSolution: true });
+        setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: true });
         //updateWindowUrl(stopId, foundStop.name);
       }
     },
@@ -171,12 +195,13 @@ export function StopsExplorerContextProvider({ children }) {
       updateEntities,
       //
       selectStop,
+      selectInitialStop,
       clearSelectedStop,
       //
       selectTrip,
       clearSelectedTrip,
     }),
-    [mapState, updateMapState, setSelectedCoordinates, setSelectedFeature, disableAutoZoom, entitiesState, updateEntities, selectStop, clearSelectedStop, selectTrip, clearSelectedTrip]
+    [mapState, updateMapState, setSelectedCoordinates, setSelectedFeature, disableAutoZoom, entitiesState, updateEntities, selectStop, selectInitialStop, clearSelectedStop, selectTrip, clearSelectedTrip]
   );
 
   //
