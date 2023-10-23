@@ -62,9 +62,9 @@ export function StopsExplorerContextProvider({ children }) {
   // C. Supporting functions
 
   const updateWindowUrl = (stopId = 'all', stopName = 'Carris Metropolitana') => {
-    //const newUrl = `/stops/${stopId}`;
-    //window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
-    //document.title = stopName;
+    const newUrl = `/stops/${stopId}`;
+    window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+    document.title = stopName;
   };
 
   //
@@ -106,6 +106,8 @@ export function StopsExplorerContextProvider({ children }) {
   const selectInitialStop = useCallback(
     (stopId = false) => {
       var foundStop = null;
+      setEntitiesState(initialEntitiesState);
+      updateWindowUrl();  
       console.log(allStopsData);
       if (stopId) {
         foundStop = allStopsData.find((item) => item.id === stopId);
@@ -150,7 +152,8 @@ export function StopsExplorerContextProvider({ children }) {
         const ok = window.confirm("A tua pontuação é " + Math.round(score) + " de 10 000 pontos. Carrega OK para revelar a solução ou Cancelar para tentar novamente.");
         if (ok){
           setMapState((prev) => ({ ...prev, auto_zoom: true, selected_feature: null, selected_coordinates: null }));
-          setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: true });  
+          setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: true }); 
+          updateWindowUrl(existingStop.id);
         }
         else{
           setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: false }); 
