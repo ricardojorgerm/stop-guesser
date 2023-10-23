@@ -78,7 +78,7 @@ export default function StopsExplorerMap() {
         },
       };
     }
-  }, [stopsExplorerContext.entities.stop]);
+  }, [stopsExplorerContext.entities.stop, stopsExplorerContext.entities.showSolution]);
 
   const selectedShapeMapData = useMemo(() => {
 /*     if (selectedPatternData && selectedShapeData) {
@@ -205,6 +205,7 @@ export default function StopsExplorerMap() {
   useEffect(() => {
     // Check if map is ready
     if (stopsExplorerMap?.getSource('all-stops') === undefined) return;
+    if (!stopsExplorerContext.entities.showSolution) return;
     // Check if auto zoom is enabled
     if (!stopsExplorerContext.map.auto_zoom) return;
     // Check if there is a selected map feature
@@ -215,7 +216,7 @@ export default function StopsExplorerMap() {
     const stopMapFeature = allStopsMapData?.features.find((f) => f.properties?.id === stopsExplorerContext.entities.stop?.id);
     if (!stopMapFeature) return;
     // Center the map and save the feature to state
-    // moveMap(stopMapFeature.geometry?.coordinates);
+    moveMap(stopMapFeature.geometry?.coordinates);
     stopsExplorerContext.setSelectedFeature(stopMapFeature);
     //
   });
@@ -229,7 +230,7 @@ export default function StopsExplorerMap() {
   const handleMapClick = (event) => {
     if (event?.features[0]?.properties?.id) {
       stopsExplorerContext.selectStop(event.features[0].properties.id, stopsExplorerContext.entities.stop);
-      stopsExplorerContext.setSelectedFeature(event.features[0]);
+      //stopsExplorerContext.setSelectedFeature(event.features[0]);
       //moveMap(event.features[0].geometry?.coordinates);
     }
   };
@@ -253,9 +254,9 @@ export default function StopsExplorerMap() {
       stopsExplorerMap.setFeatureState({ source: 'all-stops', id: f.id }, { selected: false });
     });
     // Then mark the selected one as selected
-/*     if (stopsExplorerContext.map.selected_feature) {
+     if (stopsExplorerContext.map.selected_feature) {
       stopsExplorerMap.setFeatureState({ source: 'all-stops', id: stopsExplorerContext.map.selected_feature.properties.mapid }, { selected: true });
-    } */
+    } 
   };
 
   //

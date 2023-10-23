@@ -110,11 +110,6 @@ export function StopsExplorerContextProvider({ children }) {
       if (stopId) {
         foundStop = allStopsData.find((item) => item.id === stopId);
       }
-      else {
-/*         if (allStopsData){
-          foundStop=allStopsData[Math.floor(Math.random()*allStopsData.length)];
-        } */
-      }
       console.log(foundStop);
       if (foundStop) {
         setEntitiesState({ ...initialEntitiesState, stop: foundStop });
@@ -129,9 +124,6 @@ export function StopsExplorerContextProvider({ children }) {
     (stopId, existingStop) => {
       const foundStop = allStopsData.find((item) => item.id === stopId);
       if (foundStop) {
-        console.log(entitiesState);
-        console.log(entitiesState.stop);
-        console.log(mapState);
         var correct_coordinates = turf.point([existingStop.lon, existingStop.lat]);
         var user_coordinates = turf.point([foundStop.lon, foundStop.lat]);
         var distance = turf.distance(correct_coordinates, user_coordinates, {}) * 1000;
@@ -155,10 +147,14 @@ export function StopsExplorerContextProvider({ children }) {
         else if (distance > 6375){
           score = 0;
         }
-        window.alert("Your score is " + Math.round(score) + " out of 10 000 points.");
-        setMapState((prev) => ({ ...prev, auto_zoom: true, selected_feature: null, selected_coordinates: null }));
-        setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: true });
-        //updateWindowUrl(stopId, foundStop.name);
+        const ok = window.confirm("A tua pontuação é " + Math.round(score) + " de 10 000 pontos. Carrega OK para revelar a solução ou Cancelar para tentar novamente.");
+        if (ok){
+          setMapState((prev) => ({ ...prev, auto_zoom: true, selected_feature: null, selected_coordinates: null }));
+          setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: true });  
+        }
+        else{
+          setEntitiesState({ ...entitiesState, stop: existingStop, showSolution: false }); 
+        }
       }
     },
     [allStopsData]

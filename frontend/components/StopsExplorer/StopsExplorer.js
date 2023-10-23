@@ -49,8 +49,10 @@ export default function StopsExplorer() {
     if (matchedStopIdFromUrl && matchedStopIdFromUrl[1] !== 'all' && allStopsData && !stopsExplorerContext.entities.stop?.id) {
       stopsExplorerContext.selectInitialStop(matchedStopIdFromUrl[1]);
     }
-    else{
-      stopsExplorerContext.selectInitialStop(false);
+    else if (matchedStopIdFromUrl && matchedStopIdFromUrl[1] === 'all' && allStopsData && !stopsExplorerContext.entities.stop?.id)
+    {
+      const foundStop=allStopsData[Math.floor(Math.random()*allStopsData.length)];
+      stopsExplorerContext.selectInitialStop(foundStop.id);
     }
   });
 
